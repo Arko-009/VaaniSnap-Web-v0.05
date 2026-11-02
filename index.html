@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VaaniSnap | Live Voice Translator - On-Device, Privacy-First</title>
+  <meta name="description" content="VaaniSnap is a high-performance live voice translator built privacy-first with on-device Google ML Kit models, real-time speech decibel visualization, and native voice playback.">
+  <meta name="keywords" content="Voice Translator, Live Translation, Android, On-Device, Jetpack Compose, ML Kit, Speech Recognition, Text to Speech, Privacy First">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+
+  <!-- Ambient Light Mesh -->
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="site-nav" id="topNav">
+    <div class="nav-container">
+      <a href="#hero" class="brand-group" id="navBrandLink">
+        <div class="brand-icon-box">
+          <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6zM4 10h2v4H4zm4-4h2v12H8zm8 2h2v8h-2zm4 4h2v4h-2z"/></svg>
+        </div>
+        <div class="brand-meta">
+          <span class="brand-name">VaaniSnap</span>
+          <span class="brand-tagline">Voice Translator • Privacy-First</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#liveApp" class="nav-link">Try Live App</a></li>
+        <li><a href="#whyVaaniSnap" class="nav-link">Why VaaniSnap?</a></li>
+        <li><a href="#howItWorks" class="nav-link">Architecture</a></li>
+        <li><a href="#languages" class="nav-link">Languages (7)</a></li>
+        <li><a href="#downloadHub" class="nav-link">Download APK</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- View Mode Switcher -->
+        <div class="view-toggle-pill" role="group" aria-label="View mode toggle">
+          <button class="view-btn active" id="btnPhoneView" title="View inside realistic Android phone frame">
+            <span>📱</span> Phone
+          </button>
+          <button class="view-btn" id="btnFullView" title="View as edge-to-edge web app">
+            <span>💻</span> Web
+          </button>
+        </div>
+
+        <a href="https://github.com/Arko-009/VaaniSnap--Live-Translation" target="_blank" rel="noopener noreferrer" class="btn-github" id="navGitHubBtn">
+          <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+          <span>GitHub</span>
+        </a>
+
+        <button class="btn-primary trigger-download-modal" id="navDownloadBtn">
+          <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+          <span>Download APK</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero-section" id="hero">
+    <div class="hero-grid">
+      <!-- Left Content -->
+      <div class="hero-content">
+        <div class="pill-badge">
+          <span>✨</span>
+          <span>Official Release • Apache 2.0 • On-Device</span>
+        </div>
+
+        <h1 class="hero-title">
+          Speak freely.<br>
+          <span class="teal-text">Understand each other.</span>
+        </h1>
+
+        <p class="hero-description">
+          A high-performance live voice translator engineered to eliminate language barriers instantly. Speak in your native language, watch speech stream in real time with live audio decibel response, translate on-device with zero server logging, and hear native voice playback.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#liveApp" class="btn-primary btn-hero-primary" id="heroTryBtn">
+            <span>🎙️</span>
+            <span>Try Live in Browser</span>
+          </a>
+
+          <button class="btn-hero-secondary trigger-download-modal" id="heroDownloadApkBtn">
+            <svg style="width:18px; height:18px; fill:currentColor;" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+            <span>Download Android APK</span>
+          </button>
+
+          <a href="https://github.com/Arko-009/VaaniSnap--Live-Translation" target="_blank" rel="noopener noreferrer" class="btn-hero-secondary">
+            <span>⭐ View Repository</span>
+          </a>
+        </div>
+
+        <!-- Trust Stats -->
+        <div class="stats-bar">
+          <div class="stat-item">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">On-Device ML Kit</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">0 Logs</span>
+            <span class="stat-label">Volatile RAM Only</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">7</span>
+            <span class="stat-label">Global Languages</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">Offline</span>
+            <span class="stat-label">Local Model Execution</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Interactive Live App in Android Mockup -->
+      <div class="app-showcase-container" id="liveApp">
+        <div class="phone-mockup" id="phoneMockup">
+          <div class="phone-screen" id="phoneScreen">
+            <!-- Android Status Bar -->
+            <div class="phone-status-bar" id="phoneStatusBar">
+              <span id="phoneClock">18:15</span>
+              <div class="status-notch" aria-hidden="true"></div>
+              <div class="status-icons">
+                <span>5G</span>
+                <span>📶</span>
+                <span>100%</span>
+              </div>
+            </div>
+
+            <!-- Jetpack Compose Replicated Root View -->
+            <main class="compose-app-root">
+              <!-- App Header -->
+              <div class="app-header">
+                <div class="header-brand-group">
+                  <div class="header-logo-box">
+                    <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6zM4 10h2v4H4zm4-4h2v12H8zm8 2h2v8h-2zm4 4h2v4h-2z"/></svg>
+                  </div>
+                  <div class="header-title-box">
+                    <span class="header-title">VaaniSnap</span>
+                    <span class="header-subtitle">VOICE TRANSLATOR</span>
+                  </div>
+                </div>
+
+                <button class="btn-profile-trigger" id="btnProfileTrigger" title="Profile, Settings & About" aria-label="Profile, Settings & About">
+                  <svg style="width:22px; height:22px; fill:currentColor;" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </button>
+              </div>
+
+              <!-- Compose Hero Section -->
+              <div class="compose-hero">
+                <div class="compose-hero-pill">
+                  <svg viewBox="0 0 24 24"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>
+                  <span>LET EVERY VOICE BE UNDERSTOOD</span>
+                </div>
+                <div class="compose-hero-h1">Speak freely.</div>
+                <div class="compose-hero-h2">Understand each other.</div>
+                <p class="compose-hero-sub">Your words, in another language — ready to be heard.</p>
+              </div>
+
+              <!-- Language Selection Row -->
+              <div class="lang-selector-row">
+                <!-- FROM Card -->
+                <div class="lang-card" id="fromLangCard" role="button" tabindex="0" aria-label="Select source language">
+                  <span class="lang-label">FROM</span>
+                  <div class="lang-content-row">
+                    <span class="lang-flag" id="fromFlag">🇺🇸</span>
+                    <div class="lang-text-group">
+                      <div class="lang-name" id="fromName">English</div>
+                      <div class="lang-code" id="fromCode">EN</div>
+                    </div>
+                    <svg class="lang-chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                  </div>
+                  <!-- Dropdown Menu -->
+                  <ul class="lang-dropdown-menu" id="fromDropdown"></ul>
+                </div>
+
+                <!-- SWAP Button -->
+                <button class="btn-swap-lang" id="btnSwapLang" title="Swap languages" aria-label="Swap source and target languages">
+                  <svg style="width:20px; height:20px; fill:currentColor;" viewBox="0 0 24 24"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/></svg>
+                </button>
+
+                <!-- TO Card -->
+                <div class="lang-card" id="toLangCard" role="button" tabindex="0" aria-label="Select target language">
+                  <span class="lang-label">TO</span>
+                  <div class="lang-content-row">
+                    <span class="lang-flag" id="toFlag">🇮🇳</span>
+                    <div class="lang-text-group">
+                      <div class="lang-name" id="toName">Hindi</div>
+                      <div class="lang-code" id="toCode">HI</div>
+                    </div>
+                    <svg class="lang-chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                  </div>
+                  <!-- Dropdown Menu -->
+                  <ul class="lang-dropdown-menu" id="toDropdown"></ul>
+                </div>
+              </div>
+
+              <!-- Big Voice Action Input Bar -->
+              <div class="voice-action-card" id="voiceActionCard" role="button" tabindex="0" aria-label="Voice input button">
+                <div class="mic-circle-wrapper">
+                  <div class="mic-pulse-ring" aria-hidden="true"></div>
+                  <div class="mic-circle-btn">
+                    <svg id="voiceActionIcon" viewBox="0 0 24 24">
+                      <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                      <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="voice-text-column">
+                  <span class="voice-headline" id="voiceHeadline">Tap to start speaking</span>
+                  <span class="voice-subtext" id="voiceSubtext">Speak in English (EN)</span>
+                </div>
+
+                <!-- 4 Live Decibel Equalizer Bars -->
+                <div class="audio-bars-wrapper" id="audioBarsWrapper" aria-hidden="true">
+                  <div class="audio-bar"></div>
+                  <div class="audio-bar"></div>
+                  <div class="audio-bar"></div>
+                  <div class="audio-bar"></div>
+                </div>
+              </div>
+
+              <!-- Quick Test Prompts Chips -->
+              <div class="quick-prompts-bar">
+                <div class="prompts-header-row">
+                  <span class="prompts-label">QUICK TEST PHRASES</span>
+                  <button class="btn-toggle-input" id="btnToggleManualInput">Type Text ⌨️</button>
+                </div>
+                <div class="prompts-chips-scroll" id="promptsChipsContainer"></div>
+              </div>
+
+              <!-- Optional Manual Text Typing Drawer -->
+              <div class="manual-input-box" id="manualInputBox">
+                <input type="text" class="manual-input-field" id="manualInputField" placeholder="Type a sentence to translate..." aria-label="Type sentence to translate">
+                <button class="btn-manual-send" id="btnManualSend">Translate</button>
+              </div>
+
+              <!-- Conversation Section Heading -->
+              <div class="section-heading-row">
+                <div class="section-text-col">
+                  <span class="section-title">Conversation</span>
+                  <span class="section-subtitle" id="sectionSubtitle">Speak in English to translate into Hindi</span>
+                </div>
+                <span class="status-tag live" id="sectionStatusTag">LIVE</span>
+              </div>
+
+              <!-- YOU SAID Card -->
+              <div class="source-card" id="sourceCard">
+                <div class="card-meta-row">
+                  <div class="card-meta-left">
+                    <span class="status-dot"></span>
+                    <span class="card-kicker" id="sourceKicker">YOU SAID</span>
+                  </div>
+                  <span class="card-lang-tag" id="sourceLangTag">🇺🇸 English</span>
+                </div>
+                <div class="source-speech-text placeholder" id="sourceSpeechText">
+                  Tap the microphone and speak in English. Your words will appear here in real time.
+                </div>
+              </div>
+
+              <!-- TRANSLATION Card -->
+              <div class="translation-card" id="translationCard">
+                <div class="card-meta-row">
+                  <div class="card-meta-left">
+                    <div class="trans-icon-badge">
+                      <svg viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                    </div>
+                    <span class="card-kicker">TRANSLATION</span>
+                  </div>
+                  <span class="card-lang-tag" id="transLangTag">🇮🇳 Hindi</span>
+                </div>
+
+                <div class="translated-result-text placeholder" id="translatedResultText">
+                  Translation will appear here after speaking...
+                </div>
+
+                <div class="engine-check-pill" id="engineCheckPill" style="display:none;">
+                  <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                  <span>On-device ML Kit translation</span>
+                </div>
+
+                <!-- TTS Playback Controls -->
+                <div class="tts-controls-row" id="ttsControlsRow">
+                  <div class="tts-label-group">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    <span id="ttsLabelText">Hear translation</span>
+                  </div>
+
+                  <button class="btn-tts-play" id="btnTtsPlay" title="Play / Stop Voice" aria-label="Play translated voice">
+                    <svg id="btnTtsPlayIcon" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Prototype & Privacy Note -->
+              <div class="prototype-note-box">
+                <svg class="note-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                <div class="note-text-col">
+                  <span class="note-title">On-Device Voice Translation Active</span>
+                  <span class="note-desc">
+                    Translation runs on-device via Google ML Kit on Android and fast client gateways on web. Voice playback uses native speech synthesis. Zero remote server tracking, zero data retention.
+                  </span>
+                </div>
+              </div>
+
+              <!-- Footer Label -->
+              <div class="compose-app-footer">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                <span>BUILT PRIVACY-FIRST • ON-DEVICE TRANSLATION</span>
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Section 1: Why VaaniSnap & Privacy Architecture -->
+  <section class="section-wrapper" id="whyVaaniSnap">
+    <div class="section-head-center">
+      <div class="pill-badge">Privacy & Architecture</div>
+      <h2 class="section-h2">Why Choose VaaniSnap?</h2>
+      <p class="section-desc">
+        Traditional translation apps push your audio to third-party cloud servers, charge monthly subscriptions, or monetize your private conversations. VaaniSnap is engineered to run locally on your device with complete privacy.
+      </p>
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="comparison-card">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Architecture Dimension</th>
+            <th>Traditional Cloud Translators</th>
+            <th>VaaniSnap (Our Solution)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Processing Location</strong></td>
+            <td><span class="badge-tag-paid">Remote Cloud Servers</span> (Audio streamed to third-party providers)</td>
+            <td><span class="badge-tag-free">✓ On-Device Engine</span> (Google ML Kit on-device models)</td>
+          </tr>
+          <tr>
+            <td><strong>User Privacy & Audio</strong></td>
+            <td><span class="badge-tag-paid">Server Upload</span> (Transcripts stored on remote databases)</td>
+            <td><span class="badge-tag-free">✓ 100% Volatile RAM</span> (Disappears when session ends, 0 logs)</td>
+          </tr>
+          <tr>
+            <td><strong>Offline Capability</strong></td>
+            <td>Fails when WiFi or cellular data is unavailable</td>
+            <td><span class="badge-tag-free">✓ 100% Offline</span> (Once ~30MB model is saved locally)</td>
+          </tr>
+          <tr>
+            <td><strong>Licensing & Source</strong></td>
+            <td>Proprietary closed-source SaaS</td>
+            <td><span class="badge-tag-free">✓ Apache 2.0 Open Source</span> (Auditable on GitHub)</td>
+          </tr>
+          <tr>
+            <td><strong>Voice Playback (TTS)</strong></td>
+            <td>Paid cloud speech synthesize endpoints</td>
+            <td><span class="badge-tag-free">✓ Android & Web Speech</span> (Native hardware synthesis)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Section 2: How It Works & Architecture Flow -->
+  <section class="section-wrapper" id="howItWorks">
+    <div class="section-head-center">
+      <div class="pill-badge">End-to-End Pipeline</div>
+      <h2 class="section-h2">System Architecture & Flow</h2>
+      <p class="section-desc">
+        Designed cleanly around lifecycle-safe interfaces, isolating speech recognition, ML Kit translation, and TTS playback behind decoupled gateways.
+      </p>
+    </div>
+
+    <div class="arch-card">
+      <div class="arch-flow-row">
+        <!-- Step 1 -->
+        <div class="arch-step">
+          <div class="arch-step-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/></svg>
+          </div>
+          <span class="arch-step-title">1. Voice Input</span>
+          <span class="arch-step-desc">Microphone capture with real-time decibel (rmsDb) feedback.</span>
+        </div>
+
+        <div class="arch-arrow">➔</div>
+
+        <!-- Step 2 -->
+        <div class="arch-step">
+          <div class="arch-step-icon">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          </div>
+          <span class="arch-step-title">2. SpeechRecognizer</span>
+          <span class="arch-step-desc">Streams interim results into volatile RAM on the main thread.</span>
+        </div>
+
+        <div class="arch-arrow">➔</div>
+
+        <!-- Step 3 -->
+        <div class="arch-step">
+          <div class="arch-step-icon">
+            <svg viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+          </div>
+          <span class="arch-step-title">3. Google ML Kit</span>
+          <span class="arch-step-desc">Translates on-device without remote cloud dependencies.</span>
+        </div>
+
+        <div class="arch-arrow">➔</div>
+
+        <!-- Step 4 -->
+        <div class="arch-step">
+          <div class="arch-step-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+          </div>
+          <span class="arch-step-title">4. Native TTS</span>
+          <span class="arch-step-desc">Reads translation aloud in target dialect with play/stop toggle.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Supported Languages (7 Canonical Languages) -->
+  <section class="section-wrapper" id="languages">
+    <div class="section-head-center">
+      <div class="pill-badge">Bilingual Matrix</div>
+      <h2 class="section-h2">7 Canonical Languages Supported</h2>
+      <p class="section-desc">
+        Bidirectional voice translation and speech synthesis across global and regional linguistic groups. Tap any card below to listen to native pronunciation.
+      </p>
+    </div>
+
+    <div class="lang-matrix-grid" id="langMatrixGrid">
+      <!-- Injected dynamically by PublishingController -->
+    </div>
+  </section>
+
+  <!-- Section 4: Features Grid -->
+  <section class="section-wrapper" id="features">
+    <div class="section-head-center">
+      <div class="pill-badge">Core Capabilities</div>
+      <h2 class="section-h2">Built for Performance & Privacy</h2>
+      <p class="section-desc">
+        Engineered natively with modern Jetpack Compose for Android and progressive web standards for browsers.
+      </p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feat-icon-box teal">
+          <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+        </div>
+        <h3 class="feat-title">Real-Time Speech Stream</h3>
+        <p class="feat-text">
+          Streams words as you speak them. Four dynamic equalizer bars respond dynamically to your vocal decibels (rmsDb) with zero UI freezing.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feat-icon-box amber">
+          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+        </div>
+        <h3 class="feat-title">100% Volatile Memory</h3>
+        <p class="feat-text">
+          Zero database, zero local tracking files, zero analytics. Your speech stays strictly in volatile RAM and is completely wiped when you close or refresh.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feat-icon-box violet">
+          <svg viewBox="0 0 24 24"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/></svg>
+        </div>
+        <h3 class="feat-title">Instant Bidirectional Swap</h3>
+        <p class="feat-text">
+          Reverse languages with one tap (⇄). The active translated response automatically inverts into the new source and re-translates without needing you to speak again.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Download & Installation Hub -->
+  <section class="section-wrapper" id="downloadHub">
+    <div class="download-hub-card">
+      <div>
+        <div class="pill-badge" style="background:rgba(45, 212, 191, 0.15); color:#2DD4BF; border-color:rgba(45, 212, 191, 0.3);">
+          Android APK v0.05 Ready
+        </div>
+        <h2 class="hub-title">Download VaaniSnap for Android</h2>
+        <p class="hub-desc">
+          Get the native APK for your Android phone (API 26+). Tested and verified on physical hardware running Android 15+. 100% free with zero in-app purchases.
+        </p>
+
+        <!-- Command Terminal Box -->
+        <div class="terminal-box">
+          <code>adb install -r BaaniSnap-LiveTranslatorV.0.05.apk</code>
+          <button class="btn-copy-code" data-copy="adb install -r BaaniSnap-LiveTranslatorV.0.05.apk">Copy</button>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <button class="btn-primary trigger-download-modal" style="padding:0.85rem 1.6rem; font-size:1rem;">
+            <svg style="width:18px; height:18px; fill:currentColor;" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+            <span>Download APK Package</span>
+          </button>
+
+          <a href="https://github.com/Arko-009/VaaniSnap--Live-Translation" target="_blank" rel="noopener noreferrer" class="btn-hero-secondary" style="background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.15); color:#FFFFFF;">
+            <span>GitHub Releases</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: QR Code Card -->
+      <div class="qr-box-card">
+        <div class="qr-placeholder">
+          <!-- Scalable SVG QR Representation -->
+          <svg viewBox="0 0 100 100" style="width:140px; height:140px; fill:#0F172A;">
+            <rect x="10" y="10" width="25" height="25" rx="3" fill="#087F80"/>
+            <rect x="15" y="15" width="15" height="15" fill="#FFFFFF"/>
+            <rect x="18" y="18" width="9" height="9" fill="#087F80"/>
+            
+            <rect x="65" y="10" width="25" height="25" rx="3" fill="#087F80"/>
+            <rect x="70" y="15" width="15" height="15" fill="#FFFFFF"/>
+            <rect x="73" y="18" width="9" height="9" fill="#087F80"/>
+            
+            <rect x="10" y="65" width="25" height="25" rx="3" fill="#087F80"/>
+            <rect x="15" y="70" width="15" height="15" fill="#FFFFFF"/>
+            <rect x="18" y="73" width="9" height="9" fill="#087F80"/>
+            
+            <!-- Data dots -->
+            <rect x="42" y="15" width="6" height="6" fill="#182230"/>
+            <rect x="52" y="15" width="6" height="6" fill="#182230"/>
+            <rect x="42" y="25" width="6" height="6" fill="#182230"/>
+            <rect x="52" y="35" width="6" height="6" fill="#182230"/>
+            <rect x="42" y="45" width="6" height="6" fill="#182230"/>
+            <rect x="52" y="55" width="6" height="6" fill="#182230"/>
+            <rect x="42" y="65" width="6" height="6" fill="#182230"/>
+            <rect x="65" y="45" width="6" height="6" fill="#182230"/>
+            <rect x="75" y="55" width="6" height="6" fill="#182230"/>
+            <rect x="85" y="65" width="6" height="6" fill="#182230"/>
+            <rect x="65" y="75" width="6" height="6" fill="#182230"/>
+            <rect x="75" y="85" width="6" height="6" fill="#182230"/>
+          </svg>
+        </div>
+        <span class="qr-caption">Scan on Android to install APK</span>
+        <span style="font-size:0.75rem; color:var(--color-muted-ink);">Direct phone link • No account required</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top-row">
+        <div class="brand-group">
+          <div class="brand-icon-box" style="width:36px; height:36px;">
+            <svg style="width:20px; height:20px;" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6zM4 10h2v4H4zm4-4h2v12H8zm8 2h2v8h-2zm4 4h2v4h-2z"/></svg>
+          </div>
+          <span class="brand-name" style="font-size:1.15rem;">VaaniSnap Live Translation</span>
+        </div>
+
+        <ul class="nav-links" style="display:flex;">
+          <li><a href="#liveApp" class="nav-link">Web App</a></li>
+          <li><a href="#whyVaaniSnap" class="nav-link">Overview</a></li>
+          <li><a href="#howItWorks" class="nav-link">Architecture</a></li>
+          <li><a href="https://github.com/Arko-009/VaaniSnap--Live-Translation" target="_blank" class="nav-link">GitHub Repo</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-bottom-row">
+        <span>Crafted with ❤️ for open, accessible, and private human communication.</span>
+        <span>Licensed under Apache 2.0 • Privacy-First Architecture</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal 1: Profile Dialog (Jetpack Compose ProfileModalDialog) -->
+  <div class="modal-overlay" id="profileModal" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle">
+    <div class="modal-card" id="profileModalContent">
+      <!-- Injected by AppController -->
+    </div>
+  </div>
+
+  <!-- Modal 2: Download APK Hub Dialog -->
+  <div class="modal-overlay" id="downloadModal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+        <h3 style="font-size:1.25rem; font-weight:800; color:var(--color-ink);">Get VaaniSnap for Android</h3>
+        <button id="btnCloseDownloadModal" style="border:none; background:none; font-size:1.25rem; cursor:pointer; color:var(--color-muted-ink);">&times;</button>
+      </div>
+      <div class="modal-divider"></div>
+
+      <div style="display:flex; flex-direction:column; gap:16px; font-size:0.85rem;">
+        <p style="color:var(--color-muted-ink); font-size:0.82rem; line-height:1.45;">
+          Select your preferred download method below to install the native app directly on your Android phone (Android 8.0+ / API 26+).
+        </p>
+
+        <!-- Option 1: Direct Download -->
+        <div style="background:#F8FAFC; border:1px solid var(--color-border); border-radius:14px; padding:16px; display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div style="font-weight:800; font-size:0.95rem; color:var(--color-ink); display:flex; align-items:center; gap:8px;">
+              <span style="font-size:1.1rem;">⚡</span>
+              <span>Option 1: Direct APK Download</span>
+            </div>
+            <span style="background:var(--color-teal-pale); color:var(--color-teal-dark); font-size:0.7rem; font-weight:800; padding:2px 8px; border-radius:9999px;">
+              v0.05 • 83 MB
+            </span>
+          </div>
+
+          <p style="color:var(--color-muted-ink); font-size:0.78rem; line-height:1.4;">
+            Instantly download the official APK package (v0.05) directly to your device with a single click.
+          </p>
+
+          <a href="/downloads/BaaniSnap-LiveTranslatorV.0.05.apk" download="BaaniSnap-LiveTranslatorV.0.05.apk" class="btn-primary" id="btnDirectDownload" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 18px; border-radius:10px; font-weight:700; text-decoration:none; width:100%; box-sizing:border-box;">
+            <svg style="width:18px; height:18px; fill:currentColor;" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+            <span>Download APK Directly (83 MB)</span>
+          </a>
+        </div>
+
+        <!-- Option 2: Google Drive Download -->
+        <div style="background:#F8FAFC; border:1px solid var(--color-border); border-radius:14px; padding:16px; display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div style="font-weight:800; font-size:0.95rem; color:var(--color-ink); display:flex; align-items:center; gap:8px;">
+              <!-- Google Drive Vector Icon -->
+              <svg style="width:20px; height:20px;" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg">
+                <path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/>
+                <path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44c-.8 1.4-1.2 2.95-1.2 4.5h27.5z" fill="#00ac47"/>
+                <path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/>
+                <path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/>
+                <path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/>
+                <path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/>
+              </svg>
+              <span>Option 2: Google Drive Mirror</span>
+            </div>
+            <span style="background:#E0F2FE; color:#0369A1; font-size:0.7rem; font-weight:800; padding:2px 8px; border-radius:9999px;">
+              Cloud Mirror
+            </span>
+          </div>
+
+          <p style="color:var(--color-muted-ink); font-size:0.78rem; line-height:1.4;">
+            Hosted on high-speed Google Drive servers. Recommended for mobile browsers and external downloads.
+          </p>
+
+          <a href="https://drive.google.com/file/d/1Lc_FuMg5efUoON0vadqALyLPibHE_ZKy/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="btn-hero-secondary" id="btnGoogleDriveDownload" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 18px; border-radius:10px; font-weight:700; text-decoration:none; width:100%; box-sizing:border-box; background:#FFFFFF; border:1px solid #CBD5E1;">
+            <svg style="width:16px; height:16px; fill:#087F80;" viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+            <span>Download via Google Drive</span>
+          </a>
+        </div>
+
+        <!-- Installation Tip -->
+        <div style="background:#FFFBEB; border:1px solid #FDE68A; border-radius:10px; padding:10px 12px; font-size:0.75rem; color:#92400E; display:flex; align-items:flex-start; gap:8px;">
+          <span style="font-size:1rem; line-height:1;">💡</span>
+          <div style="line-height:1.4;">
+            <strong>Android Installation Note:</strong> If your phone displays <em>"File might be harmful"</em>, tap <strong>"Download anyway"</strong> and allow installation from unknown sources in settings.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript Bundle -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
