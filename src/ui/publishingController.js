@@ -14,6 +14,8 @@ export class PublishingController {
     this.bindDownloadModal();
     this.bindCopyButtons();
     this.renderLanguagesMatrix();
+    this.bindMobileNav();
+    this.bindScrollSpy();
   }
 
   bindViewSwitcher() {
@@ -115,4 +117,68 @@ export class PublishingController {
       container.appendChild(card);
     });
   }
+
+  bindMobileNav() {
+    const toggleBtn = document.getElementById("btnNavMobileToggle");
+    const drawer = document.getElementById("navMobileDrawer");
+    if (!toggleBtn || !drawer) return;
+
+    toggleBtn.addEventListener("click", () => {
+      const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
+      toggleBtn.setAttribute("aria-expanded", String(!isExpanded));
+      toggleBtn.classList.toggle("active");
+      drawer.classList.toggle("show");
+    });
+
+    // Close when clicking mobile links
+    drawer.querySelectorAll("a, button").forEach((el) => {
+      el.addEventListener("click", () => {
+        toggleBtn.setAttribute("aria-expanded", "false");
+        toggleBtn.classList.remove("active");
+        drawer.classList.remove("show");
+      });
+    });
+  }
+
+  bindScrollSpy() {
+    const navWrapper = document.getElementById("navWrapper");
+    const navLinks = document.querySelectorAll(".nav-links .nav-link");
+    const sections = ["liveApp", "whyVaaniSnap", "howItWorks", "languages"]
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (navWrapper) {
+          if (window.scrollY > 15) {
+            navWrapper.classList.add("scrolled");
+          } else {
+            navWrapper.classList.remove("scrolled");
+          }
+        }
+
+        // Active link tracking
+        let currentSectionId = "";
+        const scrollPos = window.scrollY + 160;
+        sections.forEach((sec) => {
+          if (sec.offsetTop <= scrollPos) {
+            currentSectionId = sec.getAttribute("id");
+          }
+        });
+
+        if (currentSectionId) {
+          navLinks.forEach((link) => {
+            if (link.getAttribute("href") === `#${currentSectionId}`) {
+              link.classList.add("active");
+            } else {
+              link.classList.remove("active");
+            }
+          });
+        }
+      },
+      { passive: true }
+    );
+  }
 }
+
