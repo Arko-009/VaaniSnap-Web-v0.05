@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://baanisnap-web-v005.vercel.app/sitemap.xml
