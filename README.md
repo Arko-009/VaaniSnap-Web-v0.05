@@ -5,6 +5,7 @@
 ### **Live Voice Translation & Official Android Publishing Platform**
 *Speak freely. Understand each other.*
 
+[![Live Demo](https://img.shields.io/badge/Demo-baanisnap--web--v005.vercel.app-0EA5A4?style=for-the-badge&logo=vercel&logoColor=white)](https://baanisnap-web-v005.vercel.app/)
 [![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![CSS3](https://img.shields.io/badge/CSS3-Vanilla%20Design%20Tokens-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
@@ -15,7 +16,7 @@
 
 <br/>
 
-[🚀 Live Web App](#-quickstart--terminal-commands) •
+[🚀 Live Web App (Vercel)](https://baanisnap-web-v005.vercel.app/) •
 [✨ Key Features](#-key-features) •
 [⚙️ System Architecture](#-system-architecture) •
 [🌍 Supported Languages](#-supported-languages) •
